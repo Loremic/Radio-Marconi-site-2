@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Marconi - Accesso Riservato</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9f8;
+            color: #1c1c1e;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Menu Navigazione */
+        .nav-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 16px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: #2e7d32;
+            background-color: #ffffff;
+        }
+
+        .menu-btn span {
+            width: 20px;
+            height: 2px;
+            background-color: #1c1c1e;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeInMenu 0.25s ease-out forwards;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 14px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            margin-bottom: 24px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        /* Card centrale stile verde */
+        .access-card {
+            background-color: rgba(255, 255, 255, 0.94);
+            border: 2px solid #2e7d32;
+            border-radius: 20px;
+            padding: 32px 24px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.08);
+            backdrop-filter: blur(8px);
+            text-align: left;
+        }
+
+        .access-title {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            background-color: #ffffff;
+            color: #1f2937;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+        }
+
+        /* Stile Errore Campi */
+        .form-group input.input-error {
+            border-color: #dc2626;
+            background-color: #fef2f2;
+        }
+
+        .form-group input.input-error:focus {
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+        }
+
+        .error-message {
+            display: none;
+            color: #dc2626;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        /* Pulsante / Link Accedi */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            background-color: #2e7d32;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 8px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #256628;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(46, 125, 50, 0.28);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Menu Navigazione -->
+        <div class="nav-container">
+            <div class="menu-btn" id="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html">Home</a>
+                <a href="storia.html">La nostra storia</a>
+                <a href="social.html">Le nostre pagine</a>
+                <a href="reparti.html">I nostri reparti</a>
+                <a href="access.html">Accesso riservato</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>Area Riservata</h1>
+            <p class="subtitle">Accesso consentito ai soli membri dei reparti</p>
+        </div>
+
+        <!-- Riquadro Centrale Accesso -->
+        <div class="access-card">
+            <div class="access-title">Accesso</div>
+
+            <!-- Box messaggio d'errore -->
+            <div class="error-message" id="error-message"></div>
+
+            <div class="form-group">
+                <label for="email">Indirizzo Email</label>
+                <input type="email" id="email" placeholder="nome@esempio.it">
+            </div>
+
+            <div class="form-group">
+                <label for="code">Codice Identificativo</label>
+                <input type="text" id="code" placeholder="Inserisci il tuo codice">
+            </div>
+
+            <!-- Pulsante Accedi -->
+            <a href="#" class="submit-btn" id="login-btn">Accedi</a>
+        </div>
+
+        <div class="footer">
+            &copy; Radio Marconi - I.I.S. Guglielmo Marconi
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.toggle('show');
+            btn.classList.toggle('open');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.remove('show');
+            btn.classList.remove('open');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.nav-container')) {
+                closeMenu();
+            }
+        }
+
+        // Controllo validazione e verifica nel JSON
+        document.getElementById('login-btn').addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            const emailInput = document.getElementById('email');
+            const codeInput = document.getElementById('code');
+            const errorMessage = document.getElementById('error-message');
+
+            const emailVal = emailInput.value.trim().toLowerCase();
+            const codeVal = codeInput.value.trim();
+
+            // Reset stili errore
+            emailInput.classList.remove('input-error');
+            codeInput.classList.remove('input-error');
+            errorMessage.style.display = 'none';
+
+            // 1. Controllo campi vuoti
+            if (!emailVal || !codeVal) {
+                if (!emailVal) emailInput.classList.add('input-error');
+                if (!codeVal) codeInput.classList.add('input-error');
+                
+                errorMessage.innerText = "Compila tutti i campi obbligatori.";
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // 2. Controllo dati tramite JSON
+            try {
+                const response = await fetch('membri.json');
+                const membri = await response.json();
+
+                // Cerca se esiste un utente con l'email e il codice inseriti
+                const utenteTrovato = membri.find(m => 
+                    m.email.toLowerCase() === emailVal && m.codice === codeVal
+                );
+
+                if (utenteTrovato) {
+                    // SE TROVATO: Inserisci qui l'URL del sito riservato della radio
+                    const destinazione = "https://google.com"; // Sostituisci con il link reale
+                    window.location.href = destinazione;
+                } else {
+                    // SE NON TROVATO
+                    emailInput.classList.add('input-error');
+                    codeInput.classList.add('input-error');
+                    errorMessage.innerText = "Email o codice identificativo non corretti.";
+                    errorMessage.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error("Errore nel caricamento del file membri.json:", error);
+                errorMessage.innerText = "Impossibile verificare le credenziali al momento.";
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
