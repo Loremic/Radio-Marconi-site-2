@@ -21,11 +21,12 @@
             min-height: 100vh;
             padding: 20px;
             position: relative;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             text-align: center;
             position: relative;
         }
@@ -171,13 +172,22 @@
             display: inline-block;
         }
 
+        .carousel-3d-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
         .scroll-container {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 6px 4px 16px 4px;
+            padding: 20px calc(50% - 140px);
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
+            transform-style: preserve-3d;
+            scrollbar-width: thin;
         }
 
         .scroll-container::-webkit-scrollbar { height: 6px; }
@@ -187,42 +197,46 @@
         }
 
         .feed-card {
-            flex: 0 0 240px;
-            scroll-snap-align: start;
-            border-radius: 20px;
+            flex: 0 0 280px;
+            min-height: 250px;
+            scroll-snap-align: center;
+            border-radius: 22px;
             padding: 16px;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-            transition: all 0.25s ease;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease;
+            transform-origin: center center;
+            will-change: transform, opacity;
+            background-color: #ffffff;
         }
 
-        .feed-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Card TikTok: Bordo sfumato arrotondato integrato */
         .card-tiktok {
             background: linear-gradient(#ffffff, #ffffff) padding-box,
                         linear-gradient(135deg, #00f2fe, #ff0050) border-box;
             border: 2px solid transparent;
-            border-radius: 20px;
+            border-radius: 22px;
         }
         
         .card-instagram {
-            background-color: rgba(255, 255, 255, 0.94);
+            background-color: #ffffff;
             border: 2px solid #e1306c;
-            border-radius: 20px;
+            border-radius: 22px;
         }
 
         .card-youtube {
-            background-color: rgba(255, 255, 255, 0.94);
+            background-color: #ffffff;
             border: 2px solid #ff0000;
-            border-radius: 20px;
+            border-radius: 22px;
+        }
+
+        .card-twitch {
+            background-color: #ffffff;
+            border: 2px solid #9146ff;
+            border-radius: 22px;
         }
 
         .card-tag {
@@ -239,6 +253,7 @@
         .tag-youtube { color: #ff0000; }
         .tag-instagram { color: #e1306c; }
         .tag-tiktok { color: #000000; }
+        .tag-twitch { color: #9146ff; }
 
         .card-date {
             font-size: 11px;
@@ -246,12 +261,13 @@
             font-weight: 500;
         }
 
-        .video-embed {
+        .media-embed {
             width: 100%;
-            height: 130px;
-            border-radius: 14px;
+            height: 140px;
+            border-radius: 12px;
             border: none;
             margin-bottom: 8px;
+            background-color: #000000;
         }
 
         .card-text {
@@ -310,52 +326,77 @@
                 <span>Ultimi Contenuti Pubblicati</span>
             </div>
 
-            <div class="scroll-container">
-                <a href="https://www.tiktok.com/@radio_marconi/video/ID_VIDEO_TIKTOK" target="_blank" rel="noopener noreferrer" class="feed-card card-tiktok">
-                    <div>
-                        <div class="card-tag tag-tiktok">
-                            <span>TikTok</span>
-                            <span class="card-date">Oggi</span>
+            <div class="carousel-3d-wrapper">
+                <div class="scroll-container" id="scrollContainer">
+                    
+                    <!-- YOUTUBE ULTIMO VIDEO AUTOMATICO -->
+                    <div class="feed-card card-youtube">
+                        <div class="card-tag tag-youtube">
+                            <span>YouTube</span>
+                            <span class="card-date">Ultimo Video</span>
                         </div>
-                        <div class="card-text">Guarda l'ultimo video trend sui nostri studi! 🎙️</div>
+                        <iframe 
+                            class="media-embed" 
+                            src="https://www.youtube.com/embed?listType=playlist&list=UUcI_6uX5bJ2Rk3-oB3y5xBg" 
+                            title="Ultimo video YouTube Radio Marconi" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                        <div class="card-text">Guarda l'ultimo video caricato sul canale! 🎬</div>
+                        <a href="https://youtube.com/@radio.marconi?si=MjXHT3bqSG_PfgEP" target="_blank" rel="noopener noreferrer" class="card-action" style="text-decoration: none;">
+                            <span>Apri YouTube</span>
+                            <span>&#x276F;</span>
+                        </a>
                     </div>
-                    <div class="card-action">
-                        <span>Apri su TikTok</span>
-                        <span>&#x276F;</span>
-                    </div>
-                </a>
 
-                <a href="https://www.instagram.com/reel/ID_POST_INSTAGRAM/" target="_blank" rel="noopener noreferrer" class="feed-card card-instagram">
-                    <div>
-                        <div class="card-tag tag-instagram">
-                            <span>Instagram</span>
-                            <span class="card-date">Ieri</span>
+                    <!-- TWITCH LIVE EMBED -->
+                    <div class="feed-card card-twitch">
+                        <div class="card-tag tag-twitch">
+                            <span>Twitch</span>
+                            <span class="card-date">In Diretta</span>
                         </div>
-                        <div class="card-text">I momenti migliori dell'ultima diretta in regia. 📸</div>
+                        <iframe 
+                            class="media-embed"
+                            src="https://player.twitch.tv/?channel=radiomarconi&parent=localhost" 
+                            allowfullscreen>
+                        </iframe>
+                        <div class="card-text">Segui le nostre live streaming in studio su Twitch! 🎙️</div>
+                        <a href="https://www.twitch.tv/radiomarconi" target="_blank" rel="noopener noreferrer" class="card-action" style="text-decoration: none;">
+                            <span>Vai al canale Twitch</span>
+                            <span>&#x276F;</span>
+                        </a>
                     </div>
-                    <div class="card-action">
-                        <span>Guarda Reel</span>
-                        <span>&#x276F;</span>
-                    </div>
-                </a>
 
-                <div class="feed-card card-youtube">
-                    <div class="card-tag tag-youtube">
-                        <span>YouTube</span>
-                        <span class="card-date">3 giorni fa</span>
-                    </div>
-                    <iframe 
-                        class="video-embed" 
-                        src="https://www.youtube.com/embed/ID_VIDEO_YOUTUBE" 
-                        title="Ultimo video YouTube" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                    <div class="card-text">Nuova puntata completa in studio! 🎬</div>
-                    <a href="https://youtube.com/@radio.marconi?si=MjXHT3bqSG_PfgEP" target="_blank" rel="noopener noreferrer" class="card-action" style="text-decoration: none;">
-                        <span>Apri canale</span>
-                        <span>&#x276F;</span>
+                    <!-- TIKTOK -->
+                    <a href="https://www.tiktok.com/@radio_marconi" target="_blank" rel="noopener noreferrer" class="feed-card card-tiktok">
+                        <div>
+                            <div class="card-tag tag-tiktok">
+                                <span>TikTok</span>
+                                <span class="card-date">Profilo</span>
+                            </div>
+                            <div class="card-text">Guarda i video divertenti e i dietro le quinte sui nostri studi! 🎵</div>
+                        </div>
+                        <div class="card-action">
+                            <span>Apri su TikTok</span>
+                            <span>&#x276F;</span>
+                        </div>
                     </a>
+
+                    <!-- INSTAGRAM -->
+                    <a href="https://www.instagram.com/radiomarconi_?stkn=MW93eW9oYXEybDBoNQ==" target="_blank" rel="noopener noreferrer" class="feed-card card-instagram">
+                        <div>
+                            <div class="card-tag tag-instagram">
+                                <span>Instagram</span>
+                                <span class="card-date">Profilo</span>
+                            </div>
+                            <div class="card-text">I momenti migliori delle dirette e le foto ufficiali in regia. 📸</div>
+                        </div>
+                        <div class="card-action">
+                            <span>Guarda Reels</span>
+                            <span>&#x276F;</span>
+                        </div>
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -385,6 +426,38 @@
                 closeMenu();
             }
         }
+
+        /* --- CAROSELLO 3D --- */
+        const container = document.getElementById('scrollContainer');
+        const cards = document.querySelectorAll('.feed-card');
+
+        function update3DEffect() {
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                
+                let distanceRatio = (cardCenter - containerCenter) / (containerRect.width / 2);
+                distanceRatio = Math.max(-1.2, Math.min(1.2, distanceRatio));
+
+                const absDist = Math.abs(distanceRatio);
+                const scale = 1.08 - (absDist * 0.22); 
+                const rotateY = distanceRatio * -22; 
+                const opacity = 1 - (absDist * 0.3);
+
+                card.style.transform = `rotateY(${rotateY}deg) scale(${scale})`;
+                card.style.opacity = Math.max(opacity, 0.6);
+                
+                const zIndex = Math.round((1 - absDist) * 10);
+                card.style.zIndex = zIndex;
+            });
+        }
+
+        container.addEventListener('scroll', update3DEffect);
+        window.addEventListener('resize', update3DEffect);
+        update3DEffect();
     </script>
 
 </body>
