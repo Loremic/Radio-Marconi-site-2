@@ -14,11 +14,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f7f9f8;
-            background-image: linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('image_2.jpeg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: top center;
-            background-attachment: fixed;
             color: #1c1c1e;
             display: flex;
             justify-content: center;
@@ -45,7 +40,7 @@
         .menu-btn {
             background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 12px;
+            border-radius: 16px;
             width: 42px;
             height: 42px;
             display: flex;
@@ -84,7 +79,7 @@
             background-color: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             animation: fadeInMenu 0.25s ease-out forwards;
@@ -100,7 +95,7 @@
             font-size: 14px;
             font-weight: 600;
             text-align: left;
-            border-radius: 10px;
+            border-radius: 14px;
             transition: all 0.2s ease;
         }
 
@@ -194,11 +189,8 @@
         .feed-card {
             flex: 0 0 240px;
             scroll-snap-align: start;
-            background-color: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 20px;
+            padding: 16px;
             text-decoration: none;
             color: inherit;
             display: flex;
@@ -210,8 +202,27 @@
 
         .feed-card:hover {
             transform: translateY(-3px);
-            border-color: #2e7d32;
-            box-shadow: 0 6px 16px rgba(46, 125, 50, 0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card TikTok: Bordo sfumato arrotondato integrato */
+        .card-tiktok {
+            background: linear-gradient(#ffffff, #ffffff) padding-box,
+                        linear-gradient(135deg, #00f2fe, #ff0050) border-box;
+            border: 2px solid transparent;
+            border-radius: 20px;
+        }
+        
+        .card-instagram {
+            background-color: rgba(255, 255, 255, 0.94);
+            border: 2px solid #e1306c;
+            border-radius: 20px;
+        }
+
+        .card-youtube {
+            background-color: rgba(255, 255, 255, 0.94);
+            border: 2px solid #ff0000;
+            border-radius: 20px;
         }
 
         .card-tag {
@@ -238,7 +249,7 @@
         .video-embed {
             width: 100%;
             height: 130px;
-            border-radius: 10px;
+            border-radius: 14px;
             border: none;
             margin-bottom: 8px;
         }
@@ -300,7 +311,7 @@
             </div>
 
             <div class="scroll-container">
-                <a href="https://www.tiktok.com/@radio_marconi/video/ID_VIDEO_TIKTOK" target="_blank" rel="noopener noreferrer" class="feed-card">
+                <a href="https://www.tiktok.com/@radio_marconi/video/ID_VIDEO_TIKTOK" target="_blank" rel="noopener noreferrer" class="feed-card card-tiktok">
                     <div>
                         <div class="card-tag tag-tiktok">
                             <span>TikTok</span>
@@ -314,7 +325,7 @@
                     </div>
                 </a>
 
-                <a href="https://www.instagram.com/reel/ID_POST_INSTAGRAM/" target="_blank" rel="noopener noreferrer" class="feed-card">
+                <a href="https://www.instagram.com/reel/ID_POST_INSTAGRAM/" target="_blank" rel="noopener noreferrer" class="feed-card card-instagram">
                     <div>
                         <div class="card-tag tag-instagram">
                             <span>Instagram</span>
@@ -328,7 +339,7 @@
                     </div>
                 </a>
 
-                <div class="feed-card">
+                <div class="feed-card card-youtube">
                     <div class="card-tag tag-youtube">
                         <span>YouTube</span>
                         <span class="card-date">3 giorni fa</span>
