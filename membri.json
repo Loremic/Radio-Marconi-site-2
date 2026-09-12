@@ -1,0 +1,16 @@
+[
+	{
+		"email": "lorenzo.miceli@marconicloud.it",
+		"codice": "LOR1612",
+		"nome": "Lorenzo Miceli",
+		"reparto": "Speaker",
+		"ruolo": "CR"
+	},
+	{
+		"email": "federico.asciutti@marconicloud.it",
+		"codice": "FDA1633",
+		"nome": "Federico Asciutti",
+		"reparto": "Montaggio",
+		"ruolo": "MR"
+	}
+]
