@@ -14,11 +14,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f7f9f8;
-            background-image: linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('image_2.jpeg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: top center;
-            background-attachment: fixed;
             color: #1c1c1e;
             display: flex;
             justify-content: center;
@@ -44,7 +39,7 @@
         .menu-btn {
             background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 12px;
+            border-radius: 16px;
             width: 42px;
             height: 42px;
             display: flex;
@@ -83,7 +78,7 @@
             background-color: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             animation: fadeInMenu 0.25s ease-out forwards;
@@ -99,7 +94,7 @@
             font-size: 14px;
             font-weight: 600;
             text-align: left;
-            border-radius: 10px;
+            border-radius: 14px;
             transition: all 0.2s ease;
         }
 
@@ -162,7 +157,7 @@
             background-color: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 14px;
+            border-radius: 20px;
             overflow: hidden;
             transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
@@ -170,7 +165,7 @@
         }
 
         .accordion-header {
-            padding: 12px 16px;
+            padding: 14px 18px;
             font-weight: 600;
             font-size: 14px;
             color: #1f2937;
@@ -205,7 +200,7 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            padding: 0 16px;
+            padding: 0 18px;
             font-size: 13px;
             line-height: 1.5;
             color: #4b5563;
@@ -215,7 +210,7 @@
 
         .accordion-item.active .accordion-content {
             max-height: 200px;
-            padding: 0 16px 16px 16px;
+            padding: 0 18px 18px 18px;
         }
 
         .footer {
@@ -285,11 +280,21 @@
 
             <div class="accordion-item" onclick="toggleAccordion(this)">
                 <div class="accordion-header">
-                    <span>Tecnico Video e Qualità</span>
+                    <span>Tecnico Video</span>
                     <span class="arrow-icon">&#x276F;</span>
                 </div>
                 <div class="accordion-content">
-                    Cura le inquadrature delle telecamere durante le dirette, la regia video e controlla lo standard qualitativo complessivo delle trasmissioni.
+                    Gestisce le inquadrature delle telecamere durante le trasmissioni in diretta, la regia visiva, le riprese esterne e l'editing dei contenuti multimediali.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Qualità</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Monitora lo standard complessivo dei programmi, garantendo il rispetto dei tempi, la correttezza formale delle trasmissioni e il miglioramento continuo del palinsesto.
                 </div>
             </div>
         </div>
@@ -316,7 +321,7 @@
                     <span class="arrow-icon">&#x276F;</span>
                 </div>
                 <div class="accordion-content">
-                    Responsabile operativo di uno specifico settore (Speaker, Social, Audio, Video). Organizza i turni, assegna le mansioni e guida i membri del team.
+                    Responsabile operativo di uno specifico settore (Speaker, Social, Audio, Video, Qualità). Organizza i turni, assegna le mansioni e guida i membri del team.
                 </div>
             </div>
 
