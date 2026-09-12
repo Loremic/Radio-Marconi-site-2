@@ -11,14 +11,9 @@
             padding: 0;
         }
 
-        /* Sfondo base chiaro senza transizione fluida */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f7f9f8;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: top center;
-            background-attachment: fixed;
             color: #1c1c1e;
             display: flex;
             justify-content: center;
@@ -44,7 +39,7 @@
         .menu-btn {
             background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 12px;
+            border-radius: 16px;
             width: 42px;
             height: 42px;
             display: flex;
@@ -83,7 +78,7 @@
             background-color: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(229, 231, 235, 0.8);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             animation: fadeInMenu 0.25s ease-out forwards;
@@ -99,7 +94,7 @@
             font-size: 14px;
             font-weight: 600;
             text-align: left;
-            border-radius: 10px;
+            border-radius: 14px;
             transition: all 0.2s ease;
         }
 
@@ -147,7 +142,6 @@
             padding: 0 10px;
         }
 
-        /* Linea continua tra gli anni */
         .timeline-years::before {
             content: '';
             position: absolute;
@@ -160,7 +154,6 @@
             transform: translateY(-50%);
         }
 
-        /* Tratteggio visibile dopo il 2026 */
         .timeline-years::after {
             content: '';
             position: absolute;
@@ -176,9 +169,8 @@
         .year-btn {
             position: relative;
             z-index: 2;
-            width: 42px;
-            height: 32px;
-            border-radius: 10px;
+            width: 44px;
+            height: 34px;
             background-color: #ffffff;
             border: 2px solid #9ca3af;
             color: #4b5563;
@@ -190,6 +182,7 @@
             cursor: pointer;
             transition: all 0.25s ease;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 14px; /* Tutti i pulsanti mantengono angoli stondati coordinati */
         }
 
         .year-btn:hover {
@@ -201,17 +194,16 @@
             color: #ffffff;
         }
 
-        /* Card che compare solo all'apertura */
         .timeline-card {
             display: none;
             position: relative;
             text-align: left;
             background-color: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(8px);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(229, 231, 235, 0.8);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            border-radius: 24px;
+            padding: 22px;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             animation: fadeInCard 0.25s ease-out forwards;
             margin-top: 15px;
         }
@@ -220,7 +212,6 @@
             display: block;
         }
 
-        /* Freccia di puntamento */
         .timeline-card::before {
             content: '';
             position: absolute;
@@ -243,8 +234,8 @@
         }
 
         .card-logo {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -326,43 +317,43 @@
                 title: "Anno 2021 - Le Prime Idee",
                 text: "Nascono le prime idee informali tra gli studenti per creare uno spazio di voce e musica all'interno dell'istituto.",
                 logo: "logo_2021.jpeg",
-                bg: "sfondo_2021.jpeg",
-                color: "#AA28EC"
+                color: "#AA28EC",
+                borderStyle: "linear-gradient(135deg, #3EBAEB, #AA28EC)"
             },
             2022: {
                 title: "Anno 2022 - Primi Laboratori",
                 text: "Primi gruppi di lavoro e test di registrazione amatoriali per definire la struttura del progetto radiofonico.",
                 logo: "logo_2021.jpeg",
-                bg: "sfondo_2021.jpeg",
-                color: "#AA28EC"
+                color: "#AA28EC",
+                borderStyle: "linear-gradient(135deg, #3EBAEB, #AA28EC)"
             },
             2023: {
                 title: "Anno 2023 - La Nascita Ufficiale",
                 text: "Nasce ufficialmente il progetto Radio Marconi con le prime trasmissioni pilota e la formazione del primo gruppo storico.",
                 logo: "logo_2021.jpeg",
-                bg: "sfondo_2021.jpeg",
-                color: "#AA28EC"
+                color: "#AA28EC",
+                borderStyle: "linear-gradient(135deg, #3EBAEB, #AA28EC)"
             },
             2024: {
                 title: "Anno 2024 - Primi Palinsesti",
                 text: "Iniziano le trasmissioni regolari, la creazione dei reparti ufficiali e l'apertura dei canali social network.",
                 logo: "logo_2021.jpeg",
-                bg: "sfondo_2021.jpeg",
-                color: "#AA28EC"
+                color: "#AA28EC",
+                borderStyle: "linear-gradient(135deg, #3EBAEB, #AA28EC)"
             },
             2025: {
                 title: "Anno 2025 - L'Espansione",
                 text: "Inaugurazione della nuova regia audio/video. La radio amplia la programmazione con podcast e format dedicati.",
                 logo: "logo_2025.jpeg",
-                bg: "sfondo_2025.jpeg",
-                color: "#0E0069"
+                color: "#0E0069",
+                borderStyle: "#0E0069"
             },
             2026: {
                 title: "Anno 2026 - Il Presente e il Futuro",
                 text: "Radio Marconi diventa una realtà strutturata con palinsesto multimediale continuo e dirette degli eventi di istituto.",
                 logo: "image.jpeg",
-                bg: "image_2.jpeg",
-                color: "#2e7d32"
+                color: "#2e7d32",
+                borderStyle: "#2e7d32"
             }
         };
 
@@ -380,11 +371,10 @@
                 element.style.borderColor = '';
                 element.style.boxShadow = '';
                 card.classList.remove('show');
+                card.style.background = '';
+                card.style.border = '2px solid transparent';
                 activeYear = null;
-                // Ripristina lo sfondo chiaro base
-                document.body.style.backgroundImage = 'none';
             } else {
-                // Rimuovi stili personalizzati dagli altri pulsanti
                 document.querySelectorAll('.year-btn').forEach(btn => {
                     btn.classList.remove('active');
                     btn.style.backgroundColor = '';
@@ -394,22 +384,24 @@
 
                 const currentColor = storyData[year].color;
 
-                // Applica lo stile attivo dinamico al pulsante
                 element.classList.add('active');
                 element.style.backgroundColor = currentColor;
                 element.style.borderColor = currentColor;
-                element.style.boxShadow = `0 0 0 3px ${currentColor}33`; // 33 aggiunge trasparenza al glow
+                element.style.boxShadow = `0 0 0 3px ${currentColor}33`;
                 
-                // Aggiorna contenuti card (Titolo, Colore Titolo, Testo, Logo)
                 title.textContent = storyData[year].title;
                 title.style.color = currentColor;
                 text.textContent = storyData[year].text;
                 logo.src = storyData[year].logo;
 
-                // Aggiorna lo sfondo dell'intera pagina all'istante
-                document.body.style.backgroundImage = `linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('${storyData[year].bg}')`;
+                if (storyData[year].borderStyle.startsWith('linear-gradient')) {
+                    card.style.background = `linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)) padding-box, ${storyData[year].borderStyle} border-box`;
+                    card.style.border = '2px solid transparent';
+                } else {
+                    card.style.background = 'rgba(255, 255, 255, 0.94)';
+                    card.style.border = `2px solid ${storyData[year].borderStyle}`;
+                }
 
-                // Posiziona la freccia sopra il pulsante dell'anno
                 const btnRect = element.getBoundingClientRect();
                 const wrapperRect = element.closest('.timeline-wrapper').getBoundingClientRect();
                 const offsetLeft = (btnRect.left + btnRect.width / 2) - wrapperRect.left;
