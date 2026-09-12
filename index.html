@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Marconi - Home</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9f8;
+            background-image: linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('image_2.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+            background-attachment: fixed;
+            color: #1c1c1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: #2e7d32;
+            background-color: #ffffff;
+        }
+
+        .menu-btn span {
+            width: 20px;
+            height: 2px;
+            background-color: #1c1c1e;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeInMenu 0.25s ease-out forwards;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 14px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            margin-bottom: 24px;
+            margin-top: 20px;
+        }
+
+        .logo-placeholder {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .social-feed-section {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-left: 4px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2e7d32;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 6px 4px 16px 4px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-container::-webkit-scrollbar { height: 6px; }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .feed-card {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            background-color: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 16px;
+            padding: 14px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
+        }
+
+        .feed-card:hover {
+            transform: translateY(-3px);
+            border-color: #2e7d32;
+            box-shadow: 0 6px 16px rgba(46, 125, 50, 0.12);
+        }
+
+        .card-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag-youtube { color: #ff0000; }
+        .tag-instagram { color: #e1306c; }
+        .tag-tiktok { color: #000000; }
+
+        .card-date {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .video-embed {
+            width: 100%;
+            height: 130px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 8px;
+        }
+
+        .card-text {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .card-action {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="nav-container">
+            <div class="menu-btn" id="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html">Home</a>
+                <a href="storia.html">La nostra storia</a>
+                <a href="social.html">Le nostre pagine</a>
+                <a href="reparti.html">I nostri reparti</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="logo-placeholder">
+                <img src="image.jpeg" alt="Radio Marconi Logo">
+            </div>
+            <h1>Radio Marconi</h1>
+            <p class="subtitle">La radio ufficiale dell'I.I.S GUGLIELMO MARCONI</p>
+        </div>
+
+        <div class="social-feed-section">
+            <div class="section-title">
+                <span class="status-dot"></span>
+                <span>Ultimi Contenuti Pubblicati</span>
+            </div>
+
+            <div class="scroll-container">
+                <a href="https://www.tiktok.com/@radio_marconi/video/ID_VIDEO_TIKTOK" target="_blank" rel="noopener noreferrer" class="feed-card">
+                    <div>
+                        <div class="card-tag tag-tiktok">
+                            <span>TikTok</span>
+                            <span class="card-date">Oggi</span>
+                        </div>
+                        <div class="card-text">Guarda l'ultimo video trend sui nostri studi! 🎙️</div>
+                    </div>
+                    <div class="card-action">
+                        <span>Apri su TikTok</span>
+                        <span>&#x276F;</span>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/reel/ID_POST_INSTAGRAM/" target="_blank" rel="noopener noreferrer" class="feed-card">
+                    <div>
+                        <div class="card-tag tag-instagram">
+                            <span>Instagram</span>
+                            <span class="card-date">Ieri</span>
+                        </div>
+                        <div class="card-text">I momenti migliori dell'ultima diretta in regia. 📸</div>
+                    </div>
+                    <div class="card-action">
+                        <span>Guarda Reel</span>
+                        <span>&#x276F;</span>
+                    </div>
+                </a>
+
+                <div class="feed-card">
+                    <div class="card-tag tag-youtube">
+                        <span>YouTube</span>
+                        <span class="card-date">3 giorni fa</span>
+                    </div>
+                    <iframe 
+                        class="video-embed" 
+                        src="https://www.youtube.com/embed/ID_VIDEO_YOUTUBE" 
+                        title="Ultimo video YouTube" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <div class="card-text">Nuova puntata completa in studio! 🎬</div>
+                    <a href="https://youtube.com/@radio.marconi?si=MjXHT3bqSG_PfgEP" target="_blank" rel="noopener noreferrer" class="card-action" style="text-decoration: none;">
+                        <span>Apri canale</span>
+                        <span>&#x276F;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; Radio Marconi - I.I.S. Guglielmo Marconi
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.toggle('show');
+            btn.classList.toggle('open');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.remove('show');
+            btn.classList.remove('open');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.nav-container')) {
+                closeMenu();
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Marconi - La nostra storia</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sfondo base chiaro senza transizione fluida */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9f8;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+            background-attachment: fixed;
+            color: #1c1c1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: #2e7d32;
+            background-color: #ffffff;
+        }
+
+        .menu-btn span {
+            width: 20px;
+            height: 2px;
+            background-color: #1c1c1e;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeInMenu 0.25s ease-out forwards;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 14px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            margin-bottom: 24px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .timeline-wrapper {
+            margin-top: 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        .timeline-years {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        /* Linea continua tra gli anni */
+        .timeline-years::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 40px;
+            height: 3px;
+            background-color: #111827;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        /* Tratteggio visibile dopo il 2026 */
+        .timeline-years::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 25px;
+            height: 0px;
+            border-top: 3px dashed #111827;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .year-btn {
+            position: relative;
+            z-index: 2;
+            width: 42px;
+            height: 32px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            border: 2px solid #9ca3af;
+            color: #4b5563;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .year-btn:hover {
+            border-color: #2e7d32;
+            color: #2e7d32;
+        }
+
+        .year-btn.active {
+            color: #ffffff;
+        }
+
+        /* Card che compare solo all'apertura */
+        .timeline-card {
+            display: none;
+            position: relative;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            animation: fadeInCard 0.25s ease-out forwards;
+            margin-top: 15px;
+        }
+
+        .timeline-card.show {
+            display: block;
+        }
+
+        /* Freccia di puntamento */
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: var(--arrow-position, 50%);
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-bottom: 9px solid rgba(255, 255, 255, 0.94);
+            transition: left 0.3s ease;
+        }
+
+        .card-header-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
+        }
+
+        .timeline-card h3 {
+            font-size: 16px;
+        }
+
+        .timeline-card p {
+            font-size: 13px;
+            line-height: 1.55;
+            color: #374151;
+        }
+
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="nav-container">
+            <div class="menu-btn" id="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html">Home</a>
+                <a href="storia.html">La nostra storia</a>
+                <a href="social.html">Le nostre pagine</a>
+                <a href="reparti.html">I nostri reparti</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>La nostra storia</h1>
+            <p class="subtitle">Seleziona un anno per scoprire il nostro percorso</p>
+        </div>
+
+        <div class="timeline-wrapper">
+            <div class="timeline-years">
+                <button class="year-btn" onclick="toggleYear(2021, this)">2021</button>
+                <button class="year-btn" onclick="toggleYear(2022, this)">2022</button>
+                <button class="year-btn" onclick="toggleYear(2023, this)">2023</button>
+                <button class="year-btn" onclick="toggleYear(2024, this)">2024</button>
+                <button class="year-btn" onclick="toggleYear(2025, this)">2025</button>
+                <button class="year-btn" onclick="toggleYear(2026, this)">2026</button>
+            </div>
+
+            <div class="timeline-card" id="timeline-card">
+                <div class="card-header-content">
+                    <img src="" alt="Radio Marconi Logo" id="card-logo" class="card-logo">
+                    <h3 id="card-title"></h3>
+                </div>
+                <p id="card-text"></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; Radio Marconi - I.I.S. Guglielmo Marconi
+        </div>
+    </div>
+
+    <script>
+        const storyData = {
+            2021: {
+                title: "Anno 2021 - Le Prime Idee",
+                text: "Nascono le prime idee informali tra gli studenti per creare uno spazio di voce e musica all'interno dell'istituto.",
+                logo: "logo_2021.jpeg",
+                bg: "sfondo_2021.jpeg",
+                color: "#AA28EC"
+            },
+            2022: {
+                title: "Anno 2022 - Primi Laboratori",
+                text: "Primi gruppi di lavoro e test di registrazione amatoriali per definire la struttura del progetto radiofonico.",
+                logo: "logo_2021.jpeg",
+                bg: "sfondo_2021.jpeg",
+                color: "#AA28EC"
+            },
+            2023: {
+                title: "Anno 2023 - La Nascita Ufficiale",
+                text: "Nasce ufficialmente il progetto Radio Marconi con le prime trasmissioni pilota e la formazione del primo gruppo storico.",
+                logo: "logo_2021.jpeg",
+                bg: "sfondo_2021.jpeg",
+                color: "#AA28EC"
+            },
+            2024: {
+                title: "Anno 2024 - Primi Palinsesti",
+                text: "Iniziano le trasmissioni regolari, la creazione dei reparti ufficiali e l'apertura dei canali social network.",
+                logo: "logo_2021.jpeg",
+                bg: "sfondo_2021.jpeg",
+                color: "#AA28EC"
+            },
+            2025: {
+                title: "Anno 2025 - L'Espansione",
+                text: "Inaugurazione della nuova regia audio/video. La radio amplia la programmazione con podcast e format dedicati.",
+                logo: "logo_2025.jpeg",
+                bg: "sfondo_2025.jpeg",
+                color: "#0E0069"
+            },
+            2026: {
+                title: "Anno 2026 - Il Presente e il Futuro",
+                text: "Radio Marconi diventa una realtà strutturata con palinsesto multimediale continuo e dirette degli eventi di istituto.",
+                logo: "image.jpeg",
+                bg: "image_2.jpeg",
+                color: "#2e7d32"
+            }
+        };
+
+        let activeYear = null;
+
+        function toggleYear(year, element) {
+            const card = document.getElementById('timeline-card');
+            const title = document.getElementById('card-title');
+            const text = document.getElementById('card-text');
+            const logo = document.getElementById('card-logo');
+
+            if (activeYear === year) {
+                element.classList.remove('active');
+                element.style.backgroundColor = '';
+                element.style.borderColor = '';
+                element.style.boxShadow = '';
+                card.classList.remove('show');
+                activeYear = null;
+                // Ripristina lo sfondo chiaro base
+                document.body.style.backgroundImage = 'none';
+            } else {
+                // Rimuovi stili personalizzati dagli altri pulsanti
+                document.querySelectorAll('.year-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.style.backgroundColor = '';
+                    btn.style.borderColor = '';
+                    btn.style.boxShadow = '';
+                });
+
+                const currentColor = storyData[year].color;
+
+                // Applica lo stile attivo dinamico al pulsante
+                element.classList.add('active');
+                element.style.backgroundColor = currentColor;
+                element.style.borderColor = currentColor;
+                element.style.boxShadow = `0 0 0 3px ${currentColor}33`; // 33 aggiunge trasparenza al glow
+                
+                // Aggiorna contenuti card (Titolo, Colore Titolo, Testo, Logo)
+                title.textContent = storyData[year].title;
+                title.style.color = currentColor;
+                text.textContent = storyData[year].text;
+                logo.src = storyData[year].logo;
+
+                // Aggiorna lo sfondo dell'intera pagina all'istante
+                document.body.style.backgroundImage = `linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('${storyData[year].bg}')`;
+
+                // Posiziona la freccia sopra il pulsante dell'anno
+                const btnRect = element.getBoundingClientRect();
+                const wrapperRect = element.closest('.timeline-wrapper').getBoundingClientRect();
+                const offsetLeft = (btnRect.left + btnRect.width / 2) - wrapperRect.left;
+                
+                card.style.setProperty('--arrow-position', `${offsetLeft}px`);
+                card.classList.add('show');
+                
+                activeYear = year;
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.toggle('show');
+            btn.classList.toggle('open');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.remove('show');
+            btn.classList.remove('open');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.nav-container')) {
+                closeMenu();
+            }
+        }
+    </script>
+
+</body>
+</html>

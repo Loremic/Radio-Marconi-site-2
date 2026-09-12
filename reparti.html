@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Marconi - Reparti e Ruoli</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9f8;
+            background-image: linear-gradient(180deg, rgba(247, 249, 248, 0.2) 0%, rgba(247, 249, 248, 0.85) 70%, #f7f9f8 100%), url('image_2.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+            background-attachment: fixed;
+            color: #1c1c1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: #2e7d32;
+            background-color: #ffffff;
+        }
+
+        .menu-btn span {
+            width: 20px;
+            height: 2px;
+            background-color: #1c1c1e;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeInMenu 0.25s ease-out forwards;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 14px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(46, 125, 50, 0.08);
+            color: #2e7d32;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            margin-bottom: 24px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 24px 0 12px 0;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2e7d32;
+            border-radius: 50%;
+        }
+
+        .accordion-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .accordion-item {
+            width: 65%;
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+        }
+
+        .accordion-header {
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .accordion-header:hover { color: #2e7d32; }
+
+        .accordion-item.active {
+            width: 100%;
+            border-color: #2e7d32;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.12);
+        }
+
+        .accordion-item.active .accordion-header { color: #2e7d32; }
+
+        .arrow-icon {
+            font-size: 11px;
+            color: #9ca3af;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion-item.active .arrow-icon {
+            transform: rotate(90deg);
+            color: #2e7d32;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #4b5563;
+            text-align: left;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 200px;
+            padding: 0 16px 16px 16px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="nav-container">
+            <div class="menu-btn" id="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html">Home</a>
+                <a href="storia.html">La nostra storia</a>
+                <a href="social.html">Le nostre pagine</a>
+                <a href="reparti.html">I nostri reparti</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>Organizzazione</h1>
+            <p class="subtitle">Clicca sulle sezioni per scoprire reparti e ruoli</p>
+        </div>
+
+        <div class="section-title">
+            <span class="status-dot"></span>
+            <span>I Nostri Reparti</span>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Speaker</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    La voce ufficiale di Radio Marconi. Gli speaker conducono i programmi in diretta, le interviste e gestiscono il palinsesto parlato della radio.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Social Media</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Gestisce la presenza digitale della radio su Instagram, TikTok e YouTube. Crea contenuti grafici, video brevi e mantiene attiva la community.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Tecnico Audio</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Responsabile della regia sonora, della gestione dei microfoni, del mixer, delle musiche di sottofondo e della qualità dell'audio in streaming.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Tecnico Video e Qualità</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Cura le inquadrature delle telecamere durante le dirette, la regia video e controlla lo standard qualitativo complessivo delle trasmissioni.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <span class="status-dot"></span>
+            <span>I Ruoli</span>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Direttivo Radio</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Organo di coordinamento generale della radio. Pianifica le attività a lungo termine, gestisce i rapporti con la scuola e coordina i capireparto.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Caporeparto</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Responsabile operativo di uno specifico settore (Speaker, Social, Audio, Video). Organizza i turni, assegna le mansioni e guida i membri del team.
+                </div>
+            </div>
+
+            <div class="accordion-item" onclick="toggleAccordion(this)">
+                <div class="accordion-header">
+                    <span>Membro Radio</span>
+                    <span class="arrow-icon">&#x276F;</span>
+                </div>
+                <div class="accordion-content">
+                    Studente parte attiva del progetto che collabora quotidianamente alla creazione dei contenuti, alle dirette e al supporto delle attività radiofoniche.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; Radio Marconi - I.I.S. Guglielmo Marconi
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(element) {
+            const isActive = element.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.toggle('show');
+            btn.classList.toggle('open');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            const btn = document.getElementById('menu-toggle');
+            menu.classList.remove('show');
+            btn.classList.remove('open');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.nav-container')) {
+                closeMenu();
+            }
+        }
+    </script>
+
+</body>
+</html>
