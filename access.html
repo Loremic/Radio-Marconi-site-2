@@ -128,7 +128,6 @@
             color: #4b5563;
         }
 
-        /* Card centrale stile verde */
         .access-card {
             background-color: rgba(255, 255, 255, 0.94);
             border: 2px solid #2e7d32;
@@ -178,7 +177,6 @@
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
         }
 
-        /* Stile Errore Campi */
         .form-group input.input-error {
             border-color: #dc2626;
             background-color: #fef2f2;
@@ -201,7 +199,6 @@
             text-align: center;
         }
 
-        /* Pulsante / Link Accedi */
         .submit-btn {
             display: block;
             width: 100%;
@@ -241,7 +238,6 @@
 <body>
 
     <div class="container">
-        <!-- Menu Navigazione -->
         <div class="nav-container">
             <div class="menu-btn" id="menu-toggle" onclick="toggleMenu()">
                 <span></span>
@@ -262,11 +258,9 @@
             <p class="subtitle">Accesso consentito ai soli membri dei reparti</p>
         </div>
 
-        <!-- Riquadro Centrale Accesso -->
         <div class="access-card">
             <div class="access-title">Accesso</div>
 
-            <!-- Box messaggio d'errore -->
             <div class="error-message" id="error-message"></div>
 
             <div class="form-group">
@@ -275,11 +269,10 @@
             </div>
 
             <div class="form-group">
-                <label for="code">Codice Identificativo</label>
-                <input type="text" id="code" placeholder="Inserisci il tuo codice">
+                <label for="code">Password / Codice</label>
+                <input type="password" id="code" placeholder="Inserisci la password">
             </div>
 
-            <!-- Pulsante Accedi -->
             <a href="#" class="submit-btn" id="login-btn">Accedi</a>
         </div>
 
@@ -309,7 +302,6 @@
             }
         }
 
-        // Invio credenziali al server Python Backend
         document.getElementById('login-btn').addEventListener('click', async function(e) {
             e.preventDefault();
 
@@ -320,12 +312,10 @@
             const emailVal = emailInput.value.trim().toLowerCase();
             const codeVal = codeInput.value.trim();
 
-            // Reset stili errore
             emailInput.classList.remove('input-error');
             codeInput.classList.remove('input-error');
             errorMessage.style.display = 'none';
 
-            // 1. Controllo campi vuoti
             if (!emailVal || !codeVal) {
                 if (!emailVal) emailInput.classList.add('input-error');
                 if (!codeVal) codeInput.classList.add('input-error');
@@ -335,7 +325,6 @@
                 return;
             }
 
-            // 2. Chiamata al server Python Flask
             try {
                 const response = await fetch('http://127.0.0.1:5000/login', {
                     method: 'POST',
@@ -348,10 +337,8 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    // Reindirizza in caso di successo
                     window.location.href = result.redirect;
                 } else {
-                    // Errore restituito dal server
                     emailInput.classList.add('input-error');
                     codeInput.classList.add('input-error');
                     errorMessage.innerText = result.message;
