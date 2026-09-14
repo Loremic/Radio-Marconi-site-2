@@ -24,7 +24,7 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             text-align: center;
             position: relative;
         }
@@ -142,24 +142,26 @@
             padding: 0 10px;
         }
 
+        /* Linea continua che copre i pulsanti fino al 2027 */
         .timeline-years::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 20px;
-            right: 40px;
+            right: 35px;
             height: 3px;
             background-color: #111827;
             z-index: 1;
             transform: translateY(-50%);
         }
 
+        /* Linea tratteggiata per indicare il prosieguo oltre il 2027 */
         .timeline-years::after {
             content: '';
             position: absolute;
             top: 50%;
-            right: 10px;
-            width: 25px;
+            right: 5px;
+            width: 30px;
             height: 0px;
             border-top: 3px dashed #111827;
             z-index: 1;
@@ -194,7 +196,6 @@
             color: #ffffff;
         }
 
-        /* CARD CON TRANSIZIONI FLUIDE PER DISSOLVENZA E SFONDO */
         .timeline-card {
             display: none;
             position: relative;
@@ -206,8 +207,6 @@
             border: 2px solid transparent;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             margin-top: 15px;
-
-            /* Dissolvenza e transizioni trasparenti */
             opacity: 0;
             transform: translateY(-6px);
             transition: opacity 0.3s ease, transform 0.3s ease, background 0.4s ease, border-color 0.4s ease;
@@ -302,6 +301,7 @@
                 <button class="year-btn" onclick="toggleYear(2024, this)">2024</button>
                 <button class="year-btn" onclick="toggleYear(2025, this)">2025</button>
                 <button class="year-btn" onclick="toggleYear(2026, this)">2026</button>
+                <button class="year-btn" onclick="toggleYear(2027, this)">2027</button>
             </div>
 
             <div class="timeline-card" id="timeline-card">
@@ -356,8 +356,15 @@
                 borderStyle: "#0E0069"
             },
             2026: {
-                title: "Anno 2026 - Il Presente e il Futuro",
+                title: "Anno 2026 - Il Presente",
                 text: "Radio Marconi diventa una realtà strutturata con palinsesto multimediale continuo e dirette degli eventi di istituto.",
+                logo: "image.jpeg",
+                color: "#2e7d32",
+                borderStyle: "#2e7d32"
+            },
+            2027: {
+                title: "Anno 2027 - Nuovi Orizzonti",
+                text: "Avvio delle collaborazioni con altre emittenti scolastiche e sviluppo della piattaforma di streaming proprietaria.",
                 logo: "image.jpeg",
                 color: "#2e7d32",
                 borderStyle: "#2e7d32"
@@ -373,7 +380,6 @@
             const logo = document.getElementById('card-logo');
 
             if (activeYear === year) {
-                // Se clicchi di nuovo sullo stesso anno attivo -> chiudi con dissolvenza
                 element.classList.remove('active');
                 element.style.backgroundColor = '';
                 element.style.borderColor = '';
@@ -402,7 +408,6 @@
                 element.style.borderColor = currentColor;
                 element.style.boxShadow = `0 0 0 3px ${currentColor}33`;
 
-                // Calcola la posizione della freccia subito
                 const btnRect = element.getBoundingClientRect();
                 const wrapperRect = element.closest('.timeline-wrapper').getBoundingClientRect();
                 const offsetLeft = (btnRect.left + btnRect.width / 2) - wrapperRect.left;
@@ -424,14 +429,12 @@
                 };
 
                 if (card.classList.contains('show')) {
-                    // Se una card è già aperta, sfuma prima in uscita poi aggiorna e sfuma in entrata
                     card.classList.remove('fade-in');
                     setTimeout(() => {
                         updateCardContent();
                         card.classList.add('fade-in');
                     }, 200);
                 } else {
-                    // Se si apre per la prima volta
                     updateCardContent();
                     card.classList.add('show');
                     setTimeout(() => {
